@@ -12,7 +12,7 @@ az aks nodepool add --resource-group ResourceGroupName --cluster-name AKSCluster
 kubectl create namespace gpu-resources
 
 # Install Nvidia device plugin version=0.14.5-3:
-kubectl apply -f nvidia-device-plugin-ds.yaml
+kubectl apply -f nvidia-device-plugin-ds-145-3.yaml
 
 # Get GPU node name:
 kubectl get nodes
