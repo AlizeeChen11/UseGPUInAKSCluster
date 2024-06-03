@@ -31,3 +31,4 @@ az vmss list-instance-public-ips --resource-group MC_dandchen-cycle82rg_elsaaksc
 
 # Use private key to ssh into the GPU node verify the Nvidia driver version:
 ssh -i *.pem username@PublicIPOfGPUNode
+nvidia-smi
