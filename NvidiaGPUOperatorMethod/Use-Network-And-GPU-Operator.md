@@ -1,5 +1,5 @@
 # Use Network and GPU Operator for GPUDirect RDMA in AKS cluster
-This document inlcudes steps to apply Nvidia Network Operator for MOFED driver and Nvidia GPU Operator for GPU driver in AKS GPU nodepool.
+This document inlcudes steps to apply Nvidia Network Operator for MOFED driver and Nvidia GPU Operator for GPU driver in AKS GPU nodepool for GPUDirect RDMA.
 
 ## Installation
 ### Prerequisites
