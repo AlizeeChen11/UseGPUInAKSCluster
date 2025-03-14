@@ -111,3 +111,4 @@ cp /mnt/c/Users/USERNAME/.kube/config $HOME/.kube/config
 
 - https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/deploy-ndm-v4-a100-kubernetes-cluster/3838871
 - https://github.com/edwardsp/ai-on-aks
+- https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/getting-started.html
