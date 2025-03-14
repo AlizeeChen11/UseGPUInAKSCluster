@@ -95,4 +95,6 @@ kubectl get nodes
 kubectl describe node xxx
 
 kubectl get pod -n gpu-operator
-kubectl describe pod <pod-name> -n gpu-operator![image](https://github.com/user-attachments/assets/f22f66d6-e268-4041-9080-d503c778bb02)
+kubectl describe pod <pod-name> -n gpu-operator
+
+![image](https://github.com/user-attachments/assets/f22f66d6-e268-4041-9080-d503c778bb02)
