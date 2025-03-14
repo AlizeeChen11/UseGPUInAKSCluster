@@ -1,4 +1,4 @@
-# UseGPUInAKS
+# Use GPU In AKS 
 Use GPU in AKS cluster
 This documents walks you through the steps to deploy AKS GPU cluster by using device plugin and Nvidia GPU operator separately, and to use public ip to ssh into the node to veriy the Nvidia GPU driver installed.
 
