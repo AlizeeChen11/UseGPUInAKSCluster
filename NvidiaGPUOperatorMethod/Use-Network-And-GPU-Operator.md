@@ -33,7 +33,7 @@ helm repo add nvidia https://helm.ngc.nvidia.com/nvidia
 helm repo add nvidia https://nvidia.github.io/gpu-operator
 helm repo update
 ```
-### Install Nvidia GPU Operator and GPU Operator
+### Install Nvidia Network Operator and GPU Operator
 The NVIDIA GPPU and Network operators are used to manage the GPU drivers and Infiniband drivers on the NDv5 nodes. 
 ```
 kubectl create namespace nvidia-operator
