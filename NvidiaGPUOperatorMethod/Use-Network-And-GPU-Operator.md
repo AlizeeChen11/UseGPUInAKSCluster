@@ -19,6 +19,9 @@ Deploy AKS cluster and add GPU node pool:
 az aks create -g ResourceGroupName -n AKSClusterName --ssh-key-value SSHKEYPATH --location REGION
 az aks get-credentials --resource-group ResourceGroupName --name AKSClusterName
 az aks nodepool add --resource-group ResourceGroupName --cluster-name AKSClusterName --name GPUNodePoolName --node-count 1 --node-vm-size Standard_ND96asr_v4  --tags SkipGPUDriverInstall=True --enable-node-public-ip --node-public-ip-prefix ResourceIdOfPublicIpPrefix
+az aks get-credentials --resource-group ResourceGroupName --name myAKSCluster
+![image](https://github.com/user-attachments/assets/b602539e-1fc7-48b7-a9f1-5011c702c8fb)
+
 ```
 Note: Enable gpu node public ip is for debugging purpose. If there is pod failure, we can ssh into the node to check pod log.
 
