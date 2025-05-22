@@ -92,6 +92,28 @@ kubectl get pods -n nvidia-operator
 ```
 ![image](https://github.com/user-attachments/assets/4c8493be-e2cd-48aa-a79d-7efaafc65f3a)
 
+
+### Run Node Health Check
+az login 
+az acr create    --resource-group ResourceGroupName    --name $ACR_NAME  --sku Basic    --admin-enabled
+az acr login -n $ACR_NAME
+az acr credential show --name $ACR_NAME
+kubectl create secret docker-registry acr-auth   --docker-server=$ACR_NAME.azurecr.io  --docker-username=$ACR_NAME  --docker-password=xxx
+git clone https://github.com/edwardsp/ai-on-aks.git
+cd ai-on-aks
+helm install health-check ./examples/healthcheck --set numNodes=1
+cd docker/aksnhc
+
+docker build -t $ACR_NAME.azurecr.io/aksnhc .
+docker push $ACR_NAME.azurecr.io/aksnhc
+
+kubectl -n nvidia-operator get pods
+
+dos2unix nccl-tests.sh
+cd docker/nccl
+docker build -t elsatestacr.azurecr.io/nccltest .
+docker push elsatestacr.azurecr.io/nccltest
+
 ### Additional info for troublehsooting purpose:
 ```
 Remove gpu-operatore steps(run in WSL):
