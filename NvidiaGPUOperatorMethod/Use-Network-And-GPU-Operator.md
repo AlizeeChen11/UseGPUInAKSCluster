@@ -94,6 +94,7 @@ kubectl get pods -n nvidia-operator
 
 
 ### Run Node Health Check
+```
 az login 
 az acr create    --resource-group ResourceGroupName    --name $ACR_NAME  --sku Basic    --admin-enabled
 az acr login -n $ACR_NAME
@@ -113,6 +114,7 @@ dos2unix nccl-tests.sh
 cd docker/nccl
 docker build -t elsatestacr.azurecr.io/nccltest .
 docker push elsatestacr.azurecr.io/nccltest
+```
 
 ### Additional info for troublehsooting purpose:
 ```
