@@ -60,7 +60,31 @@ helm upgrade -i --wait \
   --set secondaryNetwork.deploy=false \
   --set rdmaSharedDevicePlugin.deploy=true \
   --set sriovDevicePlugin.deploy=true \
-  --set-json sriovDevicePlugin.resources='[{"name":"mlnxnics","linkTypes": ["infiniband"], "vendors":["15b3"]}]'
+  --set-json sriovDevicePlugin.resources='[{"name":"mlnxnics","linkTypes": ["infiniband"], "vendors":["15b3"]}]', "devicesId":["101e"]]' \
+  --set rdmaSharedDevicePlugin.useCustomConfig=true \
+  --set rdmaSharedDevicePlugin.config.name=rdma-shared-dev-config
+
+File rdma-shared-dev-config content:
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rdma-shared-dev-config
+  namespace: nvidia-operator
+data:
+  config.json: |
+    {
+      "resourceList": [
+        {
+          "resourceName": "rdma/rdma_shared_device_a",
+          "selectors": {
+            "vendors": ["15b3"],
+            "linkTypes": ["infiniband"],
+			"deviceIDs": ["101e"]	
+		}
+        }
+      ]
+    }
+
 # Note: use --set ofedDriver.version="<MOFED VERSION>"
 #       to install a specific MOFED version
 #
@@ -70,7 +94,7 @@ helm upgrade -i --wait \
   --repo https://helm.ngc.nvidia.com/nvidia \
   --set nfd.enabled=false \
   --set driver.enabled=true \
-  --set driver.version="535.230.02" \
+  --set driver.version="550.90.07" \
   --set driver.rdma.enabled=true \
   --set toolkit.enabled=true
 Note: When choosing the GPU driver ersion, you need to make sure that the it applies for the VM SKU you are choosing. You can confirm that by deploying a standalone VM and installing the driver.
@@ -81,6 +105,29 @@ wget https://raw.githubusercontent.com/Mellanox/network-operator/refs/heads/mast
 sed -i 's|repository: nvcr.io/nvstaging/mellanox|repository: nvcr.io/nvidia/mellanox|' mellanox.com_v1alpha1_nicclusterpolicy_cr.yaml
 sed -i 's|version: 25.04-0.0.6.0-0|version: 24.10-0.7.0.0-0|' mellanox.com_v1alpha1_nicclusterpolicy_cr.yaml
 # This is to pull ofed driver 24.10-0.7.0.0-0 image from repository nvcr.io/nvidia/Mellanox.
+```
+Also make sure the device id and vendor id are set correctly in niccluster policy:
+```
+  rdmaSharedDevicePlugin:
+    image: k8s-rdma-shared-dev-plugin
+    repository: ghcr.io/mellanox
+    version: v1.5.2
+    # The config below directly propagates to k8s-rdma-shared-device-plugin configuration.
+    # Replace 'devices' with your (RDMA capable) netdevice name.
+    config: |
+      {
+        "configList": [
+          {
+            "resourceName": "rdma_shared_device_a",
+            "rdmaHcaMax": 8,
+            "selectors": {
+              "vendors": ["15b3"],
+              "deviceIDs": ["101e"],
+              "linkTypes": ["infiniband"]
+            }
+          }
+        ]
+      }
 
 kubectl apply -f mellanox.com_v1alpha1_nicclusterpolicy_cr.yaml
 ```
