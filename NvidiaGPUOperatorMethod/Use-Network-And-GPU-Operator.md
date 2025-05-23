@@ -60,7 +60,7 @@ helm upgrade -i --wait \
   --set secondaryNetwork.deploy=false \
   --set rdmaSharedDevicePlugin.deploy=true \
   --set sriovDevicePlugin.deploy=true \
-  --set-json sriovDevicePlugin.resources='[{"name":"mlnxnics","linkTypes": ["infiniband"], "vendors":["15b3"]}]', "devicesId":["101e"]]' \
+  --set-json sriovDevicePlugin.resources='[{"name":["mlnxnics"],"linkTypes": ["infiniband"], "vendors":["15b3"]}]', "devicesId":["101e"]]' \
   --set rdmaSharedDevicePlugin.useCustomConfig=true \
   --set rdmaSharedDevicePlugin.config.name=rdma-shared-dev-config
 
@@ -77,9 +77,10 @@ data:
         {
           "resourceName": "rdma/rdma_shared_device_a",
           "selectors": {
+ 	    "name":"mlnxnics"
             "vendors": ["15b3"],
             "linkTypes": ["infiniband"],
-			"deviceIDs": ["101e"]	
+ 	     "deviceIDs": ["101e"]	
 		}
         }
       ]
@@ -130,6 +131,7 @@ Also make sure the device id and vendor id are set correctly in niccluster polic
       }
 
 kubectl apply -f mellanox.com_v1alpha1_nicclusterpolicy_cr.yaml
+Or Reapply it if you hve made changes to the file:  kubectl replace -f mellanox.com_v1alpha1_nicclusterpolicy_cr.yaml
 ```
 Wait for sometime for those pods to be up and running. If any errors, you can check the pod logs under /var/logs/pod/xxx in node level.
 
